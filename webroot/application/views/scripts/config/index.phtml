@@ -1,0 +1,29 @@
+
+<div class="sectionTitle">
+	Configuration Selector
+</div>
+
+<div class="sectionWrapper">
+	<div class="sectionInfo">
+		Please select a configuration to load.  Each configuration file is loaded in the data/configs directory
+		and define the servers and tables to compare.
+	</div>
+</div>
+
+<div class="tableContainer">
+
+	<ul>
+
+	<?php foreach ($this->configList as $config): ?>
+
+		<li>
+			<a href="/config/load/key/<?php echo $config['sessionKey'] ?>">
+				<?php echo $config['displayName'] ?> 
+			</a> [<?php echo $config['numTables'] ?> tables]
+		</li>
+
+	<?php endforeach ?>
+
+	</ul>
+
+</div>

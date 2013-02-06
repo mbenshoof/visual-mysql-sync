@@ -1,0 +1,76 @@
+<div class="sectionTitle">
+	Table Comparison :: <?php echo $this->tableName ?>
+	<br />
+	<a href="/compare">Change Table</a>
+</div>
+
+<div class="tableContainer">
+
+	<div class="tableContainer-PaginationTop">
+		<?php echo $this->paged ?>
+	</div>
+
+	<div class="tableContainer-HeaderRow">
+
+		<?php foreach ($this->serverNames as $name): ?>
+
+		<div class="tableContainer-HeaderCell" style="width:<?php echo $this->colWidth ?>%">
+			Server: <?php echo $name ?>
+		</div>
+
+		<?php endforeach ?>
+
+		<div class="spreader"></div>
+	</div>
+
+	<?php foreach ($this->results as $results): ?>
+
+	<div class="tableContainer-BodyRow">
+
+		<?php foreach ($results['raw'] as $server => $raw): ?>
+
+		<div class="tableContainer-BodyCell" style="width:<?php echo $this->colWidth ?>%">
+
+			<?php if (count($raw) == 0): ?>
+
+				<div class="tableContainer-ResultRow Column-Missing">
+					Row Not Found...
+				</div>
+
+			<?php else: ?>
+
+				<?php foreach ($raw as $key => $val): ?>
+
+				<?php if (in_array($key, $results['diffs'])): ?>
+				<div class="tableContainer-ResultRow Column-Bad">
+				<?php else: ?>
+				<div class="tableContainer-ResultRow Column-Ok">
+				<?php endif ?>
+
+					<div class="tableContainer-ResultRow-Label">
+						<?php echo $key ?>:
+					</div>
+					<div class="tableContainer-ResultRow-Data">
+						<?php echo $val ?>
+					</div>
+					<div class="spreader"></div>
+				</div>
+
+				<?php endforeach ?>
+
+			<?php endif ?>
+		</div>
+
+		<?php endforeach ?>
+
+		<div class="spreader"></div>
+	</div>
+
+	<?php endforeach ?>
+
+	<div class="tableContainer-PaginationBottom">
+		<?php echo $this->paged ?>
+	</div>
+
+</div>
+

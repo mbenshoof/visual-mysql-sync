@@ -1,0 +1,11 @@
+<?php $this->placeholder('configSelector')->captureStart() ?>
+
+
+<?php if ($this->hasConfig): ?>
+	<b><?php echo $this->loadedConfig ?></b> loaded: <a href="/config">Change</a>
+<?php else: ?>			
+	<b>No Config loaded</b>: <a href="/config">Choose</a>
+<?php endif ?>
+
+
+<?php $this->placeholder('configSelector')->captureEnd() ?>

@@ -1,0 +1,54 @@
+<?php echo $this->doctype() . "\n"; ?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+
+<head>
+	<?php echo $this->headTitle() ?>
+	<?php echo $this->headMeta() ?>
+
+	<!--Include Javascript Files -->
+	<?php echo $this->headScript() ?>
+
+	<!--Include CSS Files -->
+	<?php echo $this->headLink() ?>
+</head>
+
+<body>
+
+	<div id="container">
+
+		<div id="hd">
+			<div id="hdMain">
+				Visual MySQL Sync
+			</div>
+			<div id="hdNav">
+				<div id="hdNavLinks">
+					<a href="/">Home</a> |
+					<a href="/config">Configuration</a> |
+					<a href="/compare">Compare Tables</a> 
+				</div>
+				<div id="hdConfigSelector">
+					<?php echo $this->placeholder('configSelector') ?>
+				</div>
+			</div>
+		</div>
+		
+		<div id="bd">
+
+			<?php echo $this->layout()->content ?>
+
+		</div>
+		<div id="ft">
+			<div id="ftText">
+				Powered by <a href="http://www.percona.com/software/percona-toolkit">Percona Toolkit</a>
+				<br />
+				Github: <a href="https://github.com/mbenshoof/visual-mysql-sync">mbenshoof / visual-mysql-sync</a>
+			</div>			
+		</div>
+
+	</div>
+
+</body>
+
+
+</html>
+

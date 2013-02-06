@@ -1,0 +1,81 @@
+<div class="sectionTitle">
+	Visualize the difference...
+</div>
+
+<div class="tableContainer">
+	<p>
+		This tool is designed to work in conjuction with <b>pt-table-checksum</b> and <b>pt-table-sync</b> to allow you to quickly see the differences between your data sets.
+	</p>
+
+	<span class="containerHeader">pt-table-checksum</span>
+	<p>
+		This tool uses replication to identify chunks that are out of sync between the master and any numbers of slaves.  Essentially, this is the first step - identify chunks that are out of sync.
+	</p>
+
+	<span class="containerHeader">pt-table-sync-replace</span>
+	<p>
+		This is a modified version of the base <b>pt-table-sync</b> tool that simply tracks the primary keys that are out sync.  In conjunction with the toolkit, you can prepare shadow tables of the real tables that exist of only the primary key columns.
+
+		This tool will then identify the actual rows that are out of sync and create <b>REPLACE INTO</b> statements for each primary key.
+	</p>
+
+	<span class="containerHeader">Full Process</span>
+	<p>
+		<ol>
+			<li>
+				Run <b>./bin/generate-checksums.sh</b> on the local server (against master).
+			</li>
+			<li>
+				Run <b>./bin/generate-diff-tables.sh</b> on the local server (against slave).
+				<ol>
+					<li>
+						Cleans up tables in the percona schema from previous runs (DROP TABLE percona.diff_%)
+					</li>
+					<li>
+						Finds the current out of sync tables from percona.checksums
+					</li>
+					<li>
+						Creates diff tables and drops all non-PK columns
+					</li>
+				</ol>							
+			</li>
+			<li>
+				Run <b>./bin/find-diffs.sh</b> on the local server (against slave).
+				<ol>
+					<li>
+						Loops through all the tables in <b>./prep/tables-to-check.txt</b> and runs pt-table-sync-replace --print
+					</li>
+					<li>
+						Runs a sed on each file to change the table names from real tables to diff tables
+					</li>
+				</ol>							
+			</li>
+			<li>
+				Run <b>./bin/reload-diffs.sh</b> on the local server (against slave).
+				<ol>
+					<li>
+						Loops through all the tables in ./prep/tables-to-check.txt and loads the sql into the percona.diff_% tables
+					</li>
+				</ol>							
+			</li>
+		</ol>
+
+		<b>NOTE:</b>  After you generate the diff tables, you can remove tables from the <b>./prep/tables-to-check.txt</b> file and only run find-diffs/reload-diffs against a limited table list.
+	</p>
+
+	<span class="containerHeader">Limitations / Caveats</span>
+	<p>
+		<ul>
+			<li>
+				Limited to 1 database per run for the CLI scripts (config files).
+			</li>
+			<li>
+				Comparison tables require primary keys.
+			</li>
+			<li>
+				Configuration in <b>cli/conf/cnf.sh</b> must match <b>webroot/data/configs/config.ini<b/> (in terms of IPs/credentials)
+			</li>
+		</ul>
+	</p>
+
+</div>

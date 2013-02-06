@@ -1,0 +1,28 @@
+<div class="sectionTitle">
+	Table Selector
+</div>
+
+<div class="sectionWrapper">
+	<div class="sectionInfo">
+		Please select a table to compare.  These are the tables associated with the loaded configuration.  Each table also shows how many rows are out of sync.
+	</div>
+</div>
+
+<div class="tableContainer">
+
+	<ul>
+
+	<?php foreach ($this->tableList as $table): ?>
+
+		<li>
+			<a href="/compare/tables/name/<?php echo $table['name']; ?>">
+				<span class="tableLink"><?php echo $table['name']; ?></span>
+			</a> 
+			<span class="tableCount">[ <?php echo $table['count']; ?> rows ]</span>
+		</li>
+
+	<?php endforeach ?>
+
+	</ul>
+
+</div>
