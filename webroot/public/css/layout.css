@@ -55,3 +55,6 @@ a {text-decoration: none}
 
 .tableContainer-PaginationTop {text-align: center; margin-bottom: 10px;}
 .tableContainer-PaginationBottom {text-align: center; margin-top: 10px;}
+
+.diffGenerator {text-align: center; width:100%;}
+.generatorOutput {margin: 10px auto 0px auto; border: 1px solid black; padding:10px; text-align: left; width: 800px; background-color: #fff; display: none;}

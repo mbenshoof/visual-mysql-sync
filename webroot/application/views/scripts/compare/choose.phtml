@@ -8,6 +8,15 @@
 	</div>
 </div>
 
+<div class="diffGenerator">
+	<div class="generatorLink">
+		<a href="javascript:void(0);" id="ajaxGenerateLink">Generate Diffs</a>
+	</div>
+	<div class="generatorOutput" id="generatorOutputID">
+
+	</div>
+</div>
+
 <div class="tableContainer">
 
 	<ul>
@@ -26,3 +35,53 @@
 	</ul>
 
 </div>
+
+<script type="text/javascript">
+
+
+$(document).ready(function(){
+
+    /**
+     * Handler for the MC Lookup function.
+     */
+    $("#ajaxGenerateLink").click(function (){
+        generateDiffs();
+    });
+});
+
+/**
+ *
+ *
+ *
+ */
+function generateDiffs()
+{
+    // Set up the loading placeholder.
+    var loadingPlaceholder = '<center><span><img src="' + baseUrl + '/images/ajax-loader.gif"></span></center>';
+    $('#generatorOutputID').html(loadingPlaceholder);
+    $('#generatorOutputID').css("display", "block");
+
+    // Make an AJAX request to validate the MC Number.
+    $.ajax({
+        
+            type: 'POST',
+            dataType: 'json',
+            url: baseUrl + '/ajax/runcli',
+            async: true,
+
+            // Params to pass to the AJAX controller.
+            data: { },
+            success: function(json) {
+
+                var status = json['status'];
+
+                if (status === "VALID") {
+                    $('#generatorOutputID').html(json['output']);
+                } else {
+                    $('#generatorOutputID').html("There was an error");
+                }
+            }
+    });
+}
+
+</script>
