@@ -26,7 +26,7 @@ for TABLE in $TABLES; do
 	RAW_SQL="$DIFF_DIR/$RAW_TABLE"
 	RELOAD_SQL="$DIFF_DIR/$RELOAD_TABLE"
 
-	SYNC="$HOME_DIR/bin/pt-table-sync-replace --defaults-file=$DEFAULTS_FILE --print --replicate percona.checksums --tables=${TABLE} --sync-to-master h=$SLAVE_IP > $RAW_SQL"
+	SYNC="$HOME_DIR/bin/pt-table-sync-replace --defaults-file=$DEFAULTS_FILE --print --replicate percona.checksums --tables=${TABLE} --sync-to-master $SLAVE_DSN > $RAW_SQL"
 
 	COMBINE="cat $FK_OFF $RAW_SQL $FK_ON > $RELOAD_SQL"
 	REPLACE="sed -i 's/REPLACE INTO \`$ORIG_SCHEMA\`.\`${TABLE}\`/REPLACE INTO $LOAD_TABLE_BASE${TABLE}\`/g' $RELOAD_SQL"

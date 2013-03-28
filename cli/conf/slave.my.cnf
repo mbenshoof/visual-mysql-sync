@@ -1,5 +1,6 @@
 [client]
 
-host = 192.168.1.46
+host = 192.168.57.15
+port = 3326
 user = percona
 password = percona
