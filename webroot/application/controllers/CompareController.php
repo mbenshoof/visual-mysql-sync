@@ -30,7 +30,7 @@ class CompareController extends Zend_Controller_Action
 	{
 		$this->_tableConfig = new Application_Model_Config();
 
-		// Check to see if there is a cartID registered.
+		// Check to see if there is a config registered.
 		if (!Zend_Registry::get('session')->isConfigLoaded) {
 			$this->_redirect("/config");
 			//echo "No config really loaded in session!!";

@@ -1,0 +1,14 @@
+<ul>
+
+<?php foreach ($this->tableList as $table): ?>
+
+	<li>
+		<a href="/compare/tables/name/<?php echo $table['name']; ?>">
+			<span class="tableLink"><?php echo $table['name']; ?></span>
+		</a> 
+		<span class="tableCount">[ <?php echo $table['count']; ?> rows ]</span>
+	</li>
+
+<?php endforeach ?>
+
+</ul>

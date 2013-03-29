@@ -2,6 +2,25 @@
 
 class AjaxController extends Zend_Controller_Action
 {
+
+	/**
+	 * Make sure there is a session variable for the config file.
+	 *
+	 * @return void
+	 */
+	public function init()
+	{
+		$this->_tableConfig = new Application_Model_Config();
+
+		// Check to see if there is a config registered.
+		if (!Zend_Registry::get('session')->isConfigLoaded) {
+			$this->_redirect("/config");
+			$this->_configKey = "Sample-Config";
+		} else {
+			$this->_configKey = Zend_Registry::get('session')->loadedConfig;
+		}
+	}
+
 	/**
 	 * Just a default landing page.
 	 *
@@ -25,12 +44,13 @@ class AjaxController extends Zend_Controller_Action
     	$output = `$runCmd`;
     	$output = str_replace("\n", "\n<br>", $output);
 
+		$this->view->tableList = $this->_tableConfig->listTables($this->_configKey, true);        
+
         $data = array(
-                "status" => "VALID",
-                "output" => "$output",
+                "status"  => "VALID",
+                "output"  => "$output",
+                "refresh" => $this->view->render('compare/tableList.phtml'),
             );
-
-
 
         $this->_helper->json($data);
     }    
